@@ -6,7 +6,7 @@ function todoReducer(state, action) {
         todoList: [
           ...state.todoList,
           {
-            id: crypto.randomUUID(),
+            _id: crypto.randomUUID(),
             content: action.content,
             edit: false,
             done: false,
@@ -18,14 +18,14 @@ function todoReducer(state, action) {
     case "DELETE_TODO": {
       return {
         ...state,
-        todoList: state.todoList.filter((t) => t.id !== action.id),
+        todoList: state.todoList.filter((t) => t._id !== action._id),
       };
     }
     case "TOGGLE_TODO": {
       return {
         ...state,
         todoList: state.todoList.map((t) =>
-          t.id !== action.id ? t : { ...t, done: !t.done }
+          t._id !== action._id ? t : { ...t, done: !t.done }
         ),
       };
     }
@@ -33,7 +33,7 @@ function todoReducer(state, action) {
       return {
         ...state,
         todoList: state.todoList.map((t) =>
-          t.id !== action.id ? t : { ...t, edit: !t.edit }
+          t._id !== action._id ? t : { ...t, edit: !t.edit }
         ),
       };
     }
@@ -41,7 +41,7 @@ function todoReducer(state, action) {
       return {
         ...state,
         todoList: state.todoList.map((t) =>
-          t.id !== action.id
+          t._id !== action._id
             ? t
             : { ...t, content: action.content, edit: false }
         ),
@@ -51,7 +51,7 @@ function todoReducer(state, action) {
       return {
         ...state,
         todoList: state.todoList.map((t) =>
-          t.id !== action.id
+          t._id !== action._id
             ? { ...t, selected: false }
             : { ...t, selected: true }
         ),

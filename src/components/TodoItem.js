@@ -1,4 +1,4 @@
-import Button from "./Button";
+// import Button from "./Button";
 
 function TodoItem({ todo, deleteTodo, toggleTodo, editTodo, selectTodo }) {
   return (
@@ -12,31 +12,40 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo, selectTodo }) {
         {todo.content} {todo.done && "(✔️)"}{" "}
       </span>
 
-      <Button
-        className="mr-15"
-        text="Valider"
+      <button
+        className="mr-15 btn btn-primary"
+        // text="Valider"
         onClick={(e) => {
           e.stopPropagation();
           toggleTodo();
         }}
-      />
+      >
+        {" "}
+        Valider
+      </button>
 
-      <Button
-        className="mr-15"
-        text="Modifier"
+      <button
+        className="mr-15 btn btn-primary"
+        // text="Modifier"
         onClick={(e) => {
           e.stopPropagation();
           editTodo();
         }}
-      />
+      >
+        Modifier{" "}
+      </button>
 
-      <Button
-        text="Supprimer"
+      <button
+        // text="Supprimer"
+        className="btn btn-primary"
         onClick={(e) => {
           e.stopPropagation();
           deleteTodo();
         }}
-      />
+      >
+        {" "}
+        Supprimer{" "}
+      </button>
     </li>
   );
 }
