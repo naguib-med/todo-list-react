@@ -54,61 +54,65 @@ function App() {
     setTodoList(todoList.filter((todo) => todo._id !== _id));
   }
 
-  function toggleTodo(_id) {
-    setTodoList(
-      todoList.map((todo) =>
-        todo._id === _id
-          ? {
-              ...todo,
-              done: !todo.done,
-            }
-          : todo
-      )
-    );
+  function updateTodo(newTodo) {
+    setTodoList(todoList.map((t) => (t._id === newTodo._id ? newTodo : t)));
   }
 
-  function toggleTodoEdit(_id) {
-    setTodoList(
-      todoList.map((todo) =>
-        todo._id === _id
-          ? {
-              ...todo,
-              edit: !todo.edit,
-            }
-          : todo
-      )
-    );
-  }
+  // function toggleTodo(_id) {
+  //   setTodoList(
+  //     todoList.map((todo) =>
+  //       todo._id === _id
+  //         ? {
+  //             ...todo,
+  //             done: !todo.done,
+  //           }
+  //         : todo
+  //     )
+  //   );
+  // }
 
-  function editTodo(_id, content) {
-    setTodoList(
-      todoList.map((todo) =>
-        todo._id === _id
-          ? {
-              ...todo,
-              edit: false,
-              content,
-            }
-          : todo
-      )
-    );
-  }
+  // function toggleTodoEdit(_id) {
+  //   setTodoList(
+  //     todoList.map((todo) =>
+  //       todo._id === _id
+  //         ? {
+  //             ...todo,
+  //             edit: !todo.edit,
+  //           }
+  //         : todo
+  //     )
+  //   );
+  // }
 
-  function selectTodo(_id) {
-    setTodoList(
-      todoList.map((todo) =>
-        todo._id === _id
-          ? {
-              ...todo,
-              selected: true,
-            }
-          : {
-              ...todo,
-              selected: false,
-            }
-      )
-    );
-  }
+  // function editTodo(_id, content) {
+  //   setTodoList(
+  //     todoList.map((todo) =>
+  //       todo._id === _id
+  //         ? {
+  //             ...todo,
+  //             edit: false,
+  //             content,
+  //           }
+  //         : todo
+  //     )
+  //   );
+  // }
+
+  // function selectTodo(_id) {
+  //   setTodoList(
+  //     todoList.map((todo) =>
+  //       todo._id === _id
+  //         ? {
+  //             ...todo,
+  //             selected: true,
+  //           }
+  //         : {
+  //             ...todo,
+  //             selected: false,
+  //           }
+  //     )
+  //   );
+  // }
 
   // const [theme, setTheme] = useState("primary");
 
@@ -205,10 +209,11 @@ function App() {
           <TodoList
             todoList={todoList}
             deleteTodo={deleteTodo}
-            toggleTodo={toggleTodo}
-            toggleTodoEdit={toggleTodoEdit}
-            editTodo={editTodo}
-            selectTodo={selectTodo}
+            updateTodo={updateTodo}
+            // toggleTodo={toggleTodo}
+            // toggleTodoEdit={toggleTodoEdit}
+            // editTodo={editTodo}
+            // selectTodo={selectTodo}
           />
         )}
       </div>

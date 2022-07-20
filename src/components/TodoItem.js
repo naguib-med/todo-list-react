@@ -1,23 +1,53 @@
 // import Button from "./Button";
 
-function TodoItem({ todo, deleteTodo, toggleTodo, editTodo, selectTodo }) {
+import { useState } from "react";
+
+function TodoItem({ todo, deleteTodo, updateTodo }) {
+  const [loading, setLoading] = useState(false);
+
+  async function tryUpdateTodo(newTodo) {
+    try {
+      setLoading(true);
+      const { _id, ...newTodoWithoutId } = newTodo;
+      const response = await fetch(`https://restapi.fr/api/rtodo/${todo._id}`, {
+        method: "PATCH",
+        body: JSON.stringify(newTodoWithoutId),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        const newTodo = await response.json();
+        updateTodo(newTodo);
+      } else {
+        console.log("Erreur");
+      }
+    } catch (error) {
+      console.log("Erreur");
+    } finally {
+      setLoading(false);
+    }
+  }
   return (
     <li
-      onClick={selectTodo}
-      className={`mb-10 d-flex flex-row justify-content-center align-items-center p-10 ${
-        todo.selected ? "selected" : ""
-      }`}
+      className={
+        "mb-10 d-flex flex-row justify-content-center align-items-center p-10"
+      }
     >
-      <span className="flex-fill mr-15">
-        {todo.content} {todo.done && "(✔️)"}{" "}
-      </span>
+      {loading ? (
+        <span className="flex-fill">Chargement...</span>
+      ) : (
+        <span className="flex-fill">
+          {todo.content} {todo.done && "✅"}
+        </span>
+      )}
 
       <button
         className="mr-15 btn btn-primary"
         // text="Valider"
         onClick={(e) => {
           e.stopPropagation();
-          toggleTodo();
+          tryUpdateTodo({ ...todo, done: !todo.done });
         }}
       >
         {" "}
@@ -28,7 +58,7 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo, selectTodo }) {
         className="mr-15 btn btn-primary"
         onClick={(e) => {
           e.stopPropagation();
-          editTodo();
+          tryUpdateTodo({ ...todo, edit: true });
         }}
       >
         Modifier{" "}
