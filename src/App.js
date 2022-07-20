@@ -3,10 +3,42 @@ import AddTodo from "./components/AddTodo";
 import TodoList from "./components/TodoList";
 // import themeContext from "./context/theme";
 // import todoReducer from "./reducers/todoReducer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [todoList, setTodoList] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let shouldCancel = false;
+    async function fetchTodoList() {
+      const response = await fetch("https://restapi.fr/api/rtodo");
+      try {
+        if (response.ok) {
+          const todos = await response.json();
+          if (!shouldCancel) {
+            if (Array.isArray(todos)) {
+              setTodoList(todos);
+            } else {
+              setTodoList([todos]);
+            }
+          }
+        } else {
+          console.log("Erreur");
+        }
+      } catch (error) {
+        console.log("Erreur");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchTodoList();
+    return () => {
+      shouldCancel = true;
+    };
+  }, []);
 
   function addTodo(todo) {
     // const todo = {
@@ -167,14 +199,18 @@ function App() {
       <div className="card container p-20">
         <h1 className="mb-20">Todo list</h1>
         <AddTodo addTodo={addTodo} />
-        <TodoList
-          todoList={todoList}
-          deleteTodo={deleteTodo}
-          toggleTodo={toggleTodo}
-          toggleTodoEdit={toggleTodoEdit}
-          editTodo={editTodo}
-          selectTodo={selectTodo}
-        />
+        {loading ? (
+          <p>Chargement en courss</p>
+        ) : (
+          <TodoList
+            todoList={todoList}
+            deleteTodo={deleteTodo}
+            toggleTodo={toggleTodo}
+            toggleTodoEdit={toggleTodoEdit}
+            editTodo={editTodo}
+            selectTodo={selectTodo}
+          />
+        )}
       </div>
     </div>
   );

@@ -26,7 +26,6 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo, selectTodo }) {
 
       <button
         className="mr-15 btn btn-primary"
-        // text="Modifier"
         onClick={(e) => {
           e.stopPropagation();
           editTodo();
@@ -36,7 +35,6 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo, selectTodo }) {
       </button>
 
       <button
-        // text="Supprimer"
         className="btn btn-primary"
         onClick={(e) => {
           e.stopPropagation();

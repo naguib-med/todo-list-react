@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import Button from "./Button";
 function EditTodo({ todo, editTodo, cancelEditTodo }) {
   const [value, setValue] = useState(todo.content);
 
